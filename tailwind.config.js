@@ -16,7 +16,7 @@ export default {
       },
       fontFamily: {
         serif: ['Playfair Display', 'serif'],
-        sans: ['Inter', 'sans-serif'],
+        sans: ['Inter', 'Nunito', 'sans-serif'],
       },
       animation: {
         'heart-float': 'float 6s ease-in-out infinite',
@@ -27,6 +27,13 @@ export default {
           '0%, 100%': { transform: 'translateY(0px)' },
           '50%': { transform: 'translateY(-20px)' },
         },
+      },
+      borderRadius: {
+        button: '0.75rem',
+      },
+      boxShadow: {
+        button:
+          '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
       },
     },
   },

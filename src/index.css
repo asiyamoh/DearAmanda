@@ -19,13 +19,14 @@
   transform: rotateY(180deg);
 }
 
-body {
-  margin: 0;
-  font-family: 'Playfair Display', serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #f8fafc; /* Clean slate background */
-  min-height: 100vh;
+@layer base {
+  body {
+    margin: 0;
+    font-family: 'Nunito', 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    @apply bg-background min-h-screen;
+  }
 }
 
 code {
