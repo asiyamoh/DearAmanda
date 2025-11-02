@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root';
 import { Route as TopicSelectionRouteImport } from './routes/topic-selection';
 import { Route as HomeRouteImport } from './routes/home';
+import { Route as AdminDashboardRouteImport } from './routes/admin-dashboard';
 import { Route as IndexRouteImport } from './routes/index';
 import { Route as ComplimentsTopicSlugRouteImport } from './routes/compliments.$topicSlug';
 
@@ -22,6 +23,11 @@ const TopicSelectionRoute = TopicSelectionRouteImport.update({
 const HomeRoute = HomeRouteImport.update({
   id: '/home',
   path: '/home',
+  getParentRoute: () => rootRouteImport,
+} as any);
+const AdminDashboardRoute = AdminDashboardRouteImport.update({
+  id: '/admin-dashboard',
+  path: '/admin-dashboard',
   getParentRoute: () => rootRouteImport,
 } as any);
 const IndexRoute = IndexRouteImport.update({
@@ -37,12 +43,14 @@ const ComplimentsTopicSlugRoute = ComplimentsTopicSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute;
+  '/admin-dashboard': typeof AdminDashboardRoute;
   '/home': typeof HomeRoute;
   '/topic-selection': typeof TopicSelectionRoute;
   '/compliments/$topicSlug': typeof ComplimentsTopicSlugRoute;
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute;
+  '/admin-dashboard': typeof AdminDashboardRoute;
   '/home': typeof HomeRoute;
   '/topic-selection': typeof TopicSelectionRoute;
   '/compliments/$topicSlug': typeof ComplimentsTopicSlugRoute;
@@ -50,18 +58,30 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
   '/': typeof IndexRoute;
+  '/admin-dashboard': typeof AdminDashboardRoute;
   '/home': typeof HomeRoute;
   '/topic-selection': typeof TopicSelectionRoute;
   '/compliments/$topicSlug': typeof ComplimentsTopicSlugRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: '/' | '/home' | '/topic-selection' | '/compliments/$topicSlug';
+  fullPaths:
+    | '/'
+    | '/admin-dashboard'
+    | '/home'
+    | '/topic-selection'
+    | '/compliments/$topicSlug';
   fileRoutesByTo: FileRoutesByTo;
-  to: '/' | '/home' | '/topic-selection' | '/compliments/$topicSlug';
+  to:
+    | '/'
+    | '/admin-dashboard'
+    | '/home'
+    | '/topic-selection'
+    | '/compliments/$topicSlug';
   id:
     | '__root__'
     | '/'
+    | '/admin-dashboard'
     | '/home'
     | '/topic-selection'
     | '/compliments/$topicSlug';
@@ -69,6 +89,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute;
+  AdminDashboardRoute: typeof AdminDashboardRoute;
   HomeRoute: typeof HomeRoute;
   TopicSelectionRoute: typeof TopicSelectionRoute;
   ComplimentsTopicSlugRoute: typeof ComplimentsTopicSlugRoute;
@@ -90,6 +111,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomeRouteImport;
       parentRoute: typeof rootRouteImport;
     };
+    '/admin-dashboard': {
+      id: '/admin-dashboard';
+      path: '/admin-dashboard';
+      fullPath: '/admin-dashboard';
+      preLoaderRoute: typeof AdminDashboardRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/': {
       id: '/';
       path: '/';
@@ -109,6 +137,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminDashboardRoute: AdminDashboardRoute,
   HomeRoute: HomeRoute,
   TopicSelectionRoute: TopicSelectionRoute,
   ComplimentsTopicSlugRoute: ComplimentsTopicSlugRoute,

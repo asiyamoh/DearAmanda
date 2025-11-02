@@ -8,6 +8,7 @@ export interface Topic {
   name: string;
   icon: string; // Heroicon name
   slug: string;
+  complimentCount?: number; // Optional field for admin view
 }
 
 /**

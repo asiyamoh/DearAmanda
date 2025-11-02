@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { AppHeader } from '@/components/navigation/AppHeader';
+import { AppHeader } from '../navigation/AppHeader';
 
 interface MainLayoutProps {
   children: ReactNode;

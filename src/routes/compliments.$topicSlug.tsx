@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { ComplimentDisplayPage } from '@/features/compliments/compliment-display.page';
+import { ComplimentDisplayPage } from '../features/compliments/compliment-display.page';
 
 export const Route = createFileRoute('/compliments/$topicSlug')({
   component: ComplimentDisplayRoute,

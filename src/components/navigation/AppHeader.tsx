@@ -7,6 +7,7 @@ interface AppHeaderProps {
   rightAction?: ReactNode;
   showBackButton?: boolean;
   onBack?: () => void;
+  onLogoClick?: () => void;
   className?: string;
 }
 
@@ -16,6 +17,7 @@ export function AppHeader({
   rightAction,
   showBackButton = false,
   onBack,
+  onLogoClick,
   className = '',
 }: AppHeaderProps) {
   return (
@@ -50,11 +52,21 @@ export function AppHeader({
           {leftAction && <div>{leftAction}</div>}
         </div>
 
-        {/* Center - Title */}
+        {/* Center - Title (clickable if onLogoClick provided) */}
         <div className="flex-1 flex justify-center">
-          <h1 className="text-xl font-serif font-semibold text-forestGreen">
-            {title}
-          </h1>
+          {onLogoClick ? (
+            <button
+              onClick={onLogoClick}
+              className="text-xl font-serif font-semibold text-forestGreen hover:opacity-80 transition-opacity cursor-pointer"
+              aria-label="Logo"
+            >
+              {title}
+            </button>
+          ) : (
+            <h1 className="text-xl font-serif font-semibold text-forestGreen">
+              {title}
+            </h1>
+          )}
         </div>
 
         {/* Right side */}
