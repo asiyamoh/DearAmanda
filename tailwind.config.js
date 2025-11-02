@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
       colors: {
@@ -23,7 +20,7 @@ export default {
       },
       animation: {
         'heart-float': 'float 6s ease-in-out infinite',
-        'glow': 'pulse 3s ease-in-out infinite',
+        glow: 'pulse 3s ease-in-out infinite',
       },
       keyframes: {
         float: {
@@ -34,5 +31,4 @@ export default {
     },
   },
   plugins: [],
-}
-
+};

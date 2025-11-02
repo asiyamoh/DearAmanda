@@ -15,4 +15,3 @@ export const Route = createRootRoute({
   component: RootComponent,
   notFoundComponent: () => <Navigate to="/home" replace />,
 });
-

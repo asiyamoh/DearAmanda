@@ -12,10 +12,16 @@ function HomePage() {
         <div className="absolute top-1/4 left-1/4 w-3 h-3 text-primary-light opacity-40 animate-heart-float">
           💚
         </div>
-        <div className="absolute top-2/4 right-1/3 w-3 h-3 text-primary-light opacity-30 animate-heart-float" style={{ animationDelay: '1s' }}>
+        <div
+          className="absolute top-2/4 right-1/3 w-3 h-3 text-primary-light opacity-30 animate-heart-float"
+          style={{ animationDelay: '1s' }}
+        >
           💚
         </div>
-        <div className="absolute bottom-1/4 left-1/3 w-3 h-3 text-primary-light opacity-35 animate-heart-float" style={{ animationDelay: '2s' }}>
+        <div
+          className="absolute bottom-1/4 left-1/3 w-3 h-3 text-primary-light opacity-35 animate-heart-float"
+          style={{ animationDelay: '2s' }}
+        >
           💚
         </div>
       </div>
@@ -24,9 +30,7 @@ function HomePage() {
       <div className="relative z-10 text-center px-6">
         {/* Optional centered illustration/motif */}
         <div className="mb-8 flex justify-center">
-          <div className="text-6xl text-primary animate-pulse">
-            💚
-          </div>
+          <div className="text-6xl text-primary animate-pulse">💚</div>
         </div>
 
         {/* App Name */}
@@ -49,4 +53,3 @@ function HomePage() {
     </div>
   );
 }
-
