@@ -22,10 +22,10 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className="block text-sm font-medium text-primary-dark mb-1.5"
+            className="block text-sm font-medium text-forestGreen mb-1.5"
           >
             {label}
-            {required && <span className="text-error ml-1">*</span>}
+            {required && <span className="text-softRed ml-1">*</span>}
           </label>
         )}
 
@@ -36,13 +36,14 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
             className={clsx(
               // Base styles
               'w-full px-4 py-2.5 rounded-lg border font-sans text-base',
-              'bg-surface text-text-primary placeholder:text-text-secondary/60',
+              'bg-pureWhite text-charcoal placeholder:text-slateGray/60',
               // Border states
-              'border-primary-light focus:border-primary focus:ring-2 focus:ring-primary/20',
+              'border-mintGreen focus:border-sageGreen focus:ring-2 focus:ring-sageGreen/20',
               // Error state
-              hasError && 'border-error focus:border-error focus:ring-error/20',
+              hasError &&
+                'border-softRed focus:border-softRed focus:ring-softRed/20',
               // Disabled state
-              'disabled:bg-background disabled:text-text-secondary disabled:cursor-not-allowed',
+              'disabled:bg-offWhite disabled:text-slateGray disabled:cursor-not-allowed',
               // Transition
               'transition-colors duration-200',
               // Remove default focus outline
@@ -63,7 +64,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
         {error && (
           <p
             id={`${inputId}-error`}
-            className="mt-1.5 text-sm text-error"
+            className="mt-1.5 text-sm text-softRed"
             role="alert"
           >
             {error}
@@ -71,10 +72,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
         )}
 
         {helperText && !error && (
-          <p
-            id={`${inputId}-helper`}
-            className="mt-1.5 text-sm text-text-secondary"
-          >
+          <p id={`${inputId}-helper`} className="mt-1.5 text-sm text-slateGray">
             {helperText}
           </p>
         )}

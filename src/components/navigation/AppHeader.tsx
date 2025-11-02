@@ -21,7 +21,7 @@ export function AppHeader({
   return (
     <header
       className={clsx(
-        'w-full px-4 py-3 bg-surface border-b border-primary-light/30 shadow-sm',
+        'w-full px-4 py-3 bg-pureWhite border-b border-mintGreen/30 shadow-sm',
         className
       )}
     >
@@ -31,11 +31,11 @@ export function AppHeader({
           {showBackButton && (
             <button
               onClick={onBack}
-              className="p-1.5 rounded-lg hover:bg-primary-light/50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20"
+              className="p-1.5 rounded-lg hover:bg-mintGreen/50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-sageGreen/20"
               aria-label="Go back"
             >
               <svg
-                className="w-6 h-6 text-primary-dark"
+                className="w-6 h-6 text-forestGreen"
                 fill="none"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -52,7 +52,7 @@ export function AppHeader({
 
         {/* Center - Title */}
         <div className="flex-1 flex justify-center">
-          <h1 className="text-xl font-serif font-semibold text-primary-dark">
+          <h1 className="text-xl font-serif font-semibold text-forestGreen">
             {title}
           </h1>
         </div>

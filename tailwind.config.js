@@ -4,15 +4,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#7FB77E',
-        'primary-dark': '#3C6255',
-        'primary-light': '#B1D7B4',
-        accent: '#FFD6A5',
-        'text-primary': '#1E293B',
-        'text-secondary': '#475569',
-        background: '#F8FAFC',
-        surface: '#FFFFFF',
-        error: '#FCA5A5',
+        // Primary green palette
+        sageGreen: '#7FB77E',
+        forestGreen: '#3C6255',
+        mintGreen: '#B1D7B4',
+        // Accent colors
+        peach: '#FFD6A5',
+        // Text colors
+        charcoal: '#1E293B',
+        slateGray: '#475569',
+        // Background colors
+        offWhite: '#F8FAFC',
+        pureWhite: '#FFFFFF',
+        // Status colors
+        softRed: '#FCA5A5',
       },
       fontFamily: {
         serif: ['Playfair Display', 'serif'],

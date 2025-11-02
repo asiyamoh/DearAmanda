@@ -7,7 +7,7 @@ interface MainLayoutProps {
 
 export function MainLayout({ children }: MainLayoutProps) {
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-offWhite flex flex-col">
       {/* Header */}
       <AppHeader title="Dear Amanda" />
 
@@ -16,7 +16,7 @@ export function MainLayout({ children }: MainLayoutProps) {
 
       {/* Footer */}
       <footer className="w-full py-6 px-6">
-        <p className="text-center text-text-secondary font-sans text-sm">
+        <p className="text-center text-slateGray font-sans text-sm">
           You are loved and doing amazing things.
         </p>
       </footer>

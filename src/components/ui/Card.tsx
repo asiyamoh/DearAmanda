@@ -15,12 +15,12 @@ export function Card({
   className = '',
   ...props
 }: CardProps) {
-  const baseClasses = clsx('rounded-lg bg-surface', className);
+  const baseClasses = clsx('rounded-lg bg-pureWhite', className);
 
   const variantClasses = {
-    default: 'shadow-sm border border-primary-light/20',
+    default: 'shadow-sm border border-mintGreen/20',
     elevated: 'shadow-button',
-    outlined: 'border-2 border-primary-light',
+    outlined: 'border-2 border-mintGreen',
   };
 
   const paddingClasses = {

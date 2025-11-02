@@ -25,7 +25,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const baseClasses = clsx(
       // Base styles
       'relative inline-flex items-center justify-center gap-2 rounded-button font-sans font-medium transition-all duration-200',
-      'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary',
+      'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sageGreen',
       // Disabled state
       'disabled:opacity-50 disabled:cursor-not-allowed',
       className
@@ -39,22 +39,22 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variantClasses = {
       primary: clsx(
-        'bg-primary text-white shadow-button',
-        'hover:bg-primary-dark hover:shadow-md',
-        'active:bg-primary-dark active:scale-[0.98]'
+        'bg-sageGreen text-white shadow-button',
+        'hover:bg-forestGreen hover:shadow-md',
+        'active:bg-forestGreen active:scale-[0.98]'
       ),
       secondary: clsx(
-        'bg-surface text-primary-dark border border-primary-light shadow-sm',
-        'hover:bg-primary-light hover:border-primary',
-        'active:bg-primary-light active:scale-[0.98]'
+        'bg-pureWhite text-forestGreen border border-mintGreen shadow-sm',
+        'hover:bg-mintGreen hover:border-sageGreen',
+        'active:bg-mintGreen active:scale-[0.98]'
       ),
       ghost: clsx(
-        'bg-transparent text-primary',
-        'hover:bg-primary-light/50',
-        'active:bg-primary-light active:scale-[0.98]'
+        'bg-transparent text-sageGreen',
+        'hover:bg-mintGreen/50',
+        'active:bg-mintGreen active:scale-[0.98]'
       ),
       danger: clsx(
-        'bg-error text-white shadow-button',
+        'bg-softRed text-white shadow-button',
         'hover:bg-red-600 hover:shadow-md',
         'active:bg-red-700 active:scale-[0.98]'
       ),
