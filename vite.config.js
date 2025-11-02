@@ -8,7 +8,10 @@ export default defineConfig(({ command, mode }) => {
   // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
   const env = loadEnv(mode, process.cwd(), '')
   
+  const isElectron = process.env.ELECTRON === 'true'
+  
   return {
+    base: isElectron ? './' : undefined, // Use relative paths for Electron
     plugins: [react(), TanStackRouterVite()],
     resolve: {
       alias: {
@@ -17,11 +20,13 @@ export default defineConfig(({ command, mode }) => {
     },
     server: {
       port: 3000,
-      open: true,
+      open: !isElectron, // Don't open browser when running Electron
     },
     build: {
       outDir: 'dist',
       sourcemap: true,
+      // Ensure assets use relative paths for Electron
+      assetsDir: 'assets',
     },
     define: {
       __APP_ENV__: JSON.stringify(env.APP_ENV),
