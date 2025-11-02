@@ -1,6 +1,13 @@
+import { useNavigate } from '@tanstack/react-router';
 import { Button } from '@/components/ui/Button';
 
 export function HomePage() {
+  const navigate = useNavigate();
+
+  const handleGetStarted = () => {
+    navigate({ to: '/topic-selection' });
+  };
+
   return (
     <div className="min-h-screen bg-offWhite flex flex-col items-center justify-center relative overflow-hidden">
       {/* Floating hearts decoration */}
@@ -41,7 +48,7 @@ export function HomePage() {
 
         {/* Call-to-action button */}
         <div className="mt-12">
-          <Button>Get Started</Button>
+          <Button onClick={handleGetStarted}>Get Started</Button>
         </div>
       </div>
     </div>

@@ -9,9 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root';
+import { Route as TopicSelectionRouteImport } from './routes/topic-selection';
 import { Route as HomeRouteImport } from './routes/home';
 import { Route as IndexRouteImport } from './routes/index';
+import { Route as ComplimentsTopicSlugRouteImport } from './routes/compliments.$topicSlug';
 
+const TopicSelectionRoute = TopicSelectionRouteImport.update({
+  id: '/topic-selection',
+  path: '/topic-selection',
+  getParentRoute: () => rootRouteImport,
+} as any);
 const HomeRoute = HomeRouteImport.update({
   id: '/home',
   path: '/home',
@@ -22,35 +29,60 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any);
+const ComplimentsTopicSlugRoute = ComplimentsTopicSlugRouteImport.update({
+  id: '/compliments/$topicSlug',
+  path: '/compliments/$topicSlug',
+  getParentRoute: () => rootRouteImport,
+} as any);
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute;
   '/home': typeof HomeRoute;
+  '/topic-selection': typeof TopicSelectionRoute;
+  '/compliments/$topicSlug': typeof ComplimentsTopicSlugRoute;
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute;
   '/home': typeof HomeRoute;
+  '/topic-selection': typeof TopicSelectionRoute;
+  '/compliments/$topicSlug': typeof ComplimentsTopicSlugRoute;
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
   '/': typeof IndexRoute;
   '/home': typeof HomeRoute;
+  '/topic-selection': typeof TopicSelectionRoute;
+  '/compliments/$topicSlug': typeof ComplimentsTopicSlugRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: '/' | '/home';
+  fullPaths: '/' | '/home' | '/topic-selection' | '/compliments/$topicSlug';
   fileRoutesByTo: FileRoutesByTo;
-  to: '/' | '/home';
-  id: '__root__' | '/' | '/home';
+  to: '/' | '/home' | '/topic-selection' | '/compliments/$topicSlug';
+  id:
+    | '__root__'
+    | '/'
+    | '/home'
+    | '/topic-selection'
+    | '/compliments/$topicSlug';
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute;
   HomeRoute: typeof HomeRoute;
+  TopicSelectionRoute: typeof TopicSelectionRoute;
+  ComplimentsTopicSlugRoute: typeof ComplimentsTopicSlugRoute;
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/topic-selection': {
+      id: '/topic-selection';
+      path: '/topic-selection';
+      fullPath: '/topic-selection';
+      preLoaderRoute: typeof TopicSelectionRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/home': {
       id: '/home';
       path: '/home';
@@ -65,12 +97,21 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport;
       parentRoute: typeof rootRouteImport;
     };
+    '/compliments/$topicSlug': {
+      id: '/compliments/$topicSlug';
+      path: '/compliments/$topicSlug';
+      fullPath: '/compliments/$topicSlug';
+      preLoaderRoute: typeof ComplimentsTopicSlugRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HomeRoute: HomeRoute,
+  TopicSelectionRoute: TopicSelectionRoute,
+  ComplimentsTopicSlugRoute: ComplimentsTopicSlugRoute,
 };
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
