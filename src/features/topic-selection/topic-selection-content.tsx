@@ -3,7 +3,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { AppHeader } from '../../components/navigation/AppHeader';
 import { TopicCard } from '../../components/ui/topic-card';
 import { Button } from '../../components/ui/Button';
-import { AdminModeToggle } from '../../components/admin/admin-mode-toggle';
+import { AdminModeToggle } from '../admin/admin-mode-toggle';
 import { useToggleReveal } from '../../contexts/toggle-reveal-provider';
 import { topics, Topic } from './topic-selection.data';
 
@@ -61,7 +61,6 @@ export function TopicSelectionContent() {
               <TopicCard
                 key={topic.id}
                 name={topic.name}
-                icon={topic.icon}
                 isSelected={selectedTopic?.id === topic.id}
                 onClick={() => handleTopicClick(topic)}
               />

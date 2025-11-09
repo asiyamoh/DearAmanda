@@ -1,8 +1,8 @@
-import { Card } from '../ui/Card';
-import { Table, TableColumn, TableAction } from '../ui/Table';
-import { Button } from '../ui/Button';
+import { Card } from '../../components/ui/Card';
+import { Table, TableColumn, TableAction } from '../../components/ui/Table';
+import { Button } from '../../components/ui/Button';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { Topic } from '../../features/topic-selection/topic-selection.data';
+import { Topic } from '../topic-selection/topic-selection.data';
 
 interface TopicsManagementCardProps {
   topics: Topic[];

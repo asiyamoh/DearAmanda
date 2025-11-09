@@ -25,7 +25,7 @@ export interface TableProps<T> extends HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
-export function Table<T extends Record<string, unknown>>({
+export function Table<T extends object = Record<string, unknown>>({
   columns,
   data,
   actions,

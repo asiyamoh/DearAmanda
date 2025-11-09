@@ -1,52 +1,12 @@
-import { ComponentType } from 'react';
 import clsx from 'clsx';
-import {
-  HeartIcon,
-  SparklesIcon,
-  BookOpenIcon,
-  LightBulbIcon,
-  AcademicCapIcon,
-  ShieldCheckIcon,
-  Cog6ToothIcon,
-  UserGroupIcon,
-  MoonIcon,
-  BoltIcon,
-  CpuChipIcon,
-  BriefcaseIcon,
-  FaceSmileIcon,
-  StarIcon,
-  HomeIcon,
-} from '@heroicons/react/24/outline';
-
-// Icon mapping for dynamic rendering
-const iconMap: Record<string, ComponentType<{ className?: string }>> = {
-  HeartIcon,
-  SparklesIcon,
-  BookOpenIcon,
-  LightBulbIcon,
-  AcademicCapIcon,
-  ShieldCheckIcon,
-  Cog6ToothIcon,
-  UserGroupIcon,
-  MoonIcon,
-  BoltIcon,
-  CpuChipIcon,
-  BriefcaseIcon,
-  FaceSmileIcon,
-  StarIcon,
-  HomeIcon,
-};
 
 interface TopicCardProps {
   name: string;
-  icon: string;
   isSelected: boolean;
   onClick: () => void;
 }
 
-export function TopicCard({ name, icon, isSelected, onClick }: TopicCardProps) {
-  const IconComponent = iconMap[icon] || SparklesIcon;
-
+export function TopicCard({ name, isSelected, onClick }: TopicCardProps) {
   return (
     <button
       onClick={onClick}
@@ -63,7 +23,6 @@ export function TopicCard({ name, icon, isSelected, onClick }: TopicCardProps) {
       )}
       aria-label={`Select ${name}`}
     >
-      <IconComponent className="w-8 h-8" />
       <span className="font-sans font-medium text-sm md:text-base text-center">
         {name}
       </span>

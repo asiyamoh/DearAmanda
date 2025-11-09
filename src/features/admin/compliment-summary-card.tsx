@@ -1,10 +1,7 @@
-import { Card } from '../ui/Card';
-import { BarChart } from '../ui/bar-chart';
+import { Card } from '../../components/ui/Card';
+import { BarChart } from '../../components/ui/bar-chart';
 import { BoltIcon, EyeIcon, HeartIcon } from '@heroicons/react/24/outline';
-import {
-  AdminStats,
-  getStatChartData,
-} from '../../features/admin/admin-stats.data';
+import { AdminStats, getStatChartData } from './admin-stats.data';
 
 interface StatBoxProps {
   title: string;

@@ -1,24 +1,34 @@
+import { useState, useMemo } from 'react';
 import { AppHeader } from '../../components/navigation/AppHeader';
-import { AdminModeToggle } from '../../components/admin/admin-mode-toggle';
-import { TopicsManagementCard } from '../../components/admin/topics-management-card';
-import { ComplimentSummaryCard } from '../../components/admin/compliment-summary-card';
-import { FloatingActionButton } from '../../components/admin/floating-action-button';
+import { AdminModeToggle } from './admin-mode-toggle';
+import { TopicsManagementCard } from './topics-management-card';
+import { ComplimentSummaryCard } from './compliment-summary-card';
+import { FloatingActionButton } from './floating-action-button';
+import { CreateTopicModal } from './create-topic-modal';
 import { adminStats } from './admin-stats.data';
-import { topics } from '../../features/topic-selection/topic-selection.data';
+import { topics as initialTopics } from '../../features/topic-selection/topic-selection.data';
 import { Topic } from '../../features/topic-selection/topic-selection.data';
+import { generateCompliments } from '../../utils/openai';
 
 // Add fake compliment counts for admin view
 // In real implementation, this would come from database
-const topicsWithCounts: Topic[] = topics.map((topic, index) => ({
-  ...topic,
-  complimentCount:
-    [
-      1250, 980, 1520, 870, 1100, 750, 1340, 920, 1080, 650, 1420, 890, 1150,
-      1030, 680,
-    ][index] || 0,
-}));
+const getTopicsWithCounts = (topicsList: Topic[]): Topic[] => {
+  return topicsList.map((topic, index) => ({
+    ...topic,
+    complimentCount:
+      [
+        1250, 980, 1520, 870, 1100, 750, 1340, 920, 1080, 650, 1420, 890, 1150,
+        1030, 680,
+      ][index] || 0,
+  }));
+};
 
 export function AdminDashboardPage() {
+  const [topics, setTopics] = useState<Topic[]>(initialTopics);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
+  const topicsWithCounts = useMemo(() => getTopicsWithCounts(topics), [topics]);
+
   const handleGenerateMore = (topic: Topic) => {
     // TODO: Implement generate more functionality
     console.log('Generate more compliments for:', topic.name);
@@ -35,8 +45,64 @@ export function AdminDashboardPage() {
   };
 
   const handleCreateTopic = () => {
-    // TODO: Implement create topic functionality
-    console.log('Create new topic');
+    setIsCreateModalOpen(true);
+  };
+
+  const handleSaveTopic = (
+    topicData: Omit<Topic, 'id' | 'complimentCount'>
+  ) => {
+    // Generate a new ID (in real implementation, this would come from the database)
+    const newId = Math.max(...topics.map(t => t.id), 0) + 1;
+
+    const newTopic: Topic = {
+      ...topicData,
+      id: newId,
+      complimentCount: 0,
+    };
+
+    // Add to topics list
+    setTopics(prev => [...prev, newTopic]);
+
+    console.log('Topic saved:', newTopic);
+    // TODO: In real implementation, save to Supabase/database
+  };
+
+  const handleGenerateTopic = async (
+    topicData: Omit<Topic, 'id' | 'complimentCount'>
+  ) => {
+    try {
+      // First, save the topic
+      const newId = Math.max(...topics.map(t => t.id), 0) + 1;
+      const newTopic: Topic = {
+        ...topicData,
+        id: newId,
+        complimentCount: topicData.complimentCountToGenerate || 0,
+      };
+
+      // Add to topics list
+      setTopics(prev => [...prev, newTopic]);
+
+      // Then generate compliments using OpenAI
+      if (topicData.aiPrompt && topicData.complimentCountToGenerate) {
+        const compliments = await generateCompliments(
+          topicData.aiPrompt,
+          topicData.complimentCountToGenerate
+        );
+
+        console.log('Generated compliments:', compliments);
+        // TODO: In real implementation, save compliments to database
+        // await supabase.from('compliments').insert(
+        //   compliments.map(text => ({
+        //     text,
+        //     topic_id: newTopic.id,
+        //     topic_slug: newTopic.slug,
+        //   }))
+        // );
+      }
+    } catch (error) {
+      console.error('Error generating topic and compliments:', error);
+      // TODO: Show error toast/notification to user
+    }
   };
 
   return (
@@ -65,6 +131,14 @@ export function AdminDashboardPage() {
 
       {/* Floating Action Button */}
       <FloatingActionButton onClick={handleCreateTopic} />
+
+      {/* Create Topic Modal */}
+      <CreateTopicModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        onSave={handleSaveTopic}
+        onGenerate={handleGenerateTopic}
+      />
     </div>
   );
 }

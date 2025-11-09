@@ -5,7 +5,7 @@ import { getComplimentsForTopic } from './compliments.data';
 import { Button } from '../../components/ui/Button';
 import { Footer } from '../../components/ui/Footer';
 import { AppHeader } from '../../components/navigation/AppHeader';
-import { AdminModeToggle } from '../../components/admin/admin-mode-toggle';
+import { AdminModeToggle } from '../admin/admin-mode-toggle';
 import { useToggleReveal } from '../../contexts/toggle-reveal-provider';
 import { Route } from '../../routes/compliments.$topicSlug';
 import clsx from 'clsx';
