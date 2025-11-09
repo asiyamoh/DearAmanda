@@ -1,0 +1,42 @@
+{
+  "name": "dear-amanda-api",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "prisma generate && nest build",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\"",
+    "start": "nest start",
+    "start:dev": "NODE_ENV=development nest start --watch",
+    "start:staging": "NODE_ENV=staging nest start",
+    "start:prod": "NODE_ENV=production nest start",
+    "dev": "NODE_ENV=development nest start --watch",
+    "lint": "eslint \"src/**/*.ts\"",
+    "lint:fix": "eslint \"src/**/*.ts\" --fix",
+    "prisma:generate": "prisma generate",
+    "prisma:studio": "prisma studio",
+    "prisma:db:pull": "prisma db pull",
+    "prisma:migrate:dev": "prisma migrate dev",
+    "prisma:migrate:deploy": "prisma migrate deploy"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.1.6",
+    "@nestjs/config": "^4.0.2",
+    "@nestjs/core": "^11.1.6",
+    "@nestjs/platform-express": "^11.1.6",
+    "@prisma/client": "^6.15.0",
+    "@supabase/supabase-js": "^2.58.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^11.0.10",
+    "@nestjs/schematics": "^11.0.7",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.3.1",
+    "prisma": "^6.15.0",
+    "supabase": "^2.40.7",
+    "typescript": "^5.9.2"
+  }
+}
+
