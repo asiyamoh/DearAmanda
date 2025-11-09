@@ -10,3 +10,29 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Topic {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name      String
+  slug      String   @unique
+  prompt    String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  compliments Compliment[]
+
+  @@index([slug])
+  @@map("topics")
+}
+
+model Compliment {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  topicId   String   @map("topic_id") @db.Uuid
+  content   String   @db.Text
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  topic     Topic    @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@index([topicId])
+  @@index([topicId, used, createdAt])
+  @@map("compliments")
+}

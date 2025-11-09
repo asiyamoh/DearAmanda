@@ -26,6 +26,8 @@
     "@nestjs/platform-express": "^11.1.6",
     "@prisma/client": "^6.15.0",
     "@supabase/supabase-js": "^2.58.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.2",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
@@ -39,4 +41,3 @@
     "typescript": "^5.9.2"
   }
 }
-

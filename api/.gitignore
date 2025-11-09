@@ -6,9 +6,6 @@ node_modules/
 .env.local
 .env.*.local
 
-# Prisma
-prisma/migrations/
-
 # Build outputs
 dist/
 

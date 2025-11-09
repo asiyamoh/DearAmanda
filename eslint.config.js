@@ -9,6 +9,7 @@ export default tseslint.config(
     ignores: [
       'node_modules/**',
       'dist/**',
+      'api/dist/**',
       'build/**',
       'routeTree.gen.ts',
       '*.config.js',
