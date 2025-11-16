@@ -45,6 +45,11 @@ export interface MarkComplimentsAsUsedDto {
   ids: string[];
 }
 
+export interface UpdateComplimentDto {
+  content?: string;
+  used?: boolean;
+}
+
 export interface AdminStats {
   totalCompliments: number;
   complimentsViewed: number;

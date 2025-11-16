@@ -2,12 +2,13 @@
  * Compliments API endpoints
  */
 
-import { apiGet, apiPost, apiPatch } from '../client';
+import { apiGet, apiPost, apiPatch, apiDelete } from '../client';
 import type {
   Compliment,
   CreateComplimentDto,
   CreateComplimentsDto,
   MarkComplimentsAsUsedDto,
+  UpdateComplimentDto,
 } from '../types';
 
 /**
@@ -46,4 +47,21 @@ export async function markComplimentsAsUsed(
 ): Promise<{ count: number }> {
   const data: MarkComplimentsAsUsedDto = { ids };
   return apiPatch<{ count: number }>('/compliments/used', data);
+}
+
+/**
+ * Update a single compliment
+ */
+export async function updateCompliment(
+  id: string,
+  data: UpdateComplimentDto
+): Promise<Compliment> {
+  return apiPatch<Compliment>(`/compliments/${id}`, data);
+}
+
+/**
+ * Delete a single compliment
+ */
+export async function deleteCompliment(id: string): Promise<void> {
+  return apiDelete<void>(`/compliments/${id}`);
 }

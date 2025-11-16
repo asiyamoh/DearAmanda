@@ -14,6 +14,7 @@ import { Route as HomeRouteImport } from './routes/home';
 import { Route as AdminDashboardRouteImport } from './routes/admin-dashboard';
 import { Route as IndexRouteImport } from './routes/index';
 import { Route as ComplimentsTopicSlugRouteImport } from './routes/compliments.$topicSlug';
+import { Route as AdminComplimentsTopicSlugRouteImport } from './routes/admin-compliments.$topicSlug';
 
 const TopicSelectionRoute = TopicSelectionRouteImport.update({
   id: '/topic-selection',
@@ -40,12 +41,19 @@ const ComplimentsTopicSlugRoute = ComplimentsTopicSlugRouteImport.update({
   path: '/compliments/$topicSlug',
   getParentRoute: () => rootRouteImport,
 } as any);
+const AdminComplimentsTopicSlugRoute =
+  AdminComplimentsTopicSlugRouteImport.update({
+    id: '/admin-compliments/$topicSlug',
+    path: '/admin-compliments/$topicSlug',
+    getParentRoute: () => rootRouteImport,
+  } as any);
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute;
   '/admin-dashboard': typeof AdminDashboardRoute;
   '/home': typeof HomeRoute;
   '/topic-selection': typeof TopicSelectionRoute;
+  '/admin-compliments/$topicSlug': typeof AdminComplimentsTopicSlugRoute;
   '/compliments/$topicSlug': typeof ComplimentsTopicSlugRoute;
 }
 export interface FileRoutesByTo {
@@ -53,6 +61,7 @@ export interface FileRoutesByTo {
   '/admin-dashboard': typeof AdminDashboardRoute;
   '/home': typeof HomeRoute;
   '/topic-selection': typeof TopicSelectionRoute;
+  '/admin-compliments/$topicSlug': typeof AdminComplimentsTopicSlugRoute;
   '/compliments/$topicSlug': typeof ComplimentsTopicSlugRoute;
 }
 export interface FileRoutesById {
@@ -61,6 +70,7 @@ export interface FileRoutesById {
   '/admin-dashboard': typeof AdminDashboardRoute;
   '/home': typeof HomeRoute;
   '/topic-selection': typeof TopicSelectionRoute;
+  '/admin-compliments/$topicSlug': typeof AdminComplimentsTopicSlugRoute;
   '/compliments/$topicSlug': typeof ComplimentsTopicSlugRoute;
 }
 export interface FileRouteTypes {
@@ -70,6 +80,7 @@ export interface FileRouteTypes {
     | '/admin-dashboard'
     | '/home'
     | '/topic-selection'
+    | '/admin-compliments/$topicSlug'
     | '/compliments/$topicSlug';
   fileRoutesByTo: FileRoutesByTo;
   to:
@@ -77,6 +88,7 @@ export interface FileRouteTypes {
     | '/admin-dashboard'
     | '/home'
     | '/topic-selection'
+    | '/admin-compliments/$topicSlug'
     | '/compliments/$topicSlug';
   id:
     | '__root__'
@@ -84,6 +96,7 @@ export interface FileRouteTypes {
     | '/admin-dashboard'
     | '/home'
     | '/topic-selection'
+    | '/admin-compliments/$topicSlug'
     | '/compliments/$topicSlug';
   fileRoutesById: FileRoutesById;
 }
@@ -92,6 +105,7 @@ export interface RootRouteChildren {
   AdminDashboardRoute: typeof AdminDashboardRoute;
   HomeRoute: typeof HomeRoute;
   TopicSelectionRoute: typeof TopicSelectionRoute;
+  AdminComplimentsTopicSlugRoute: typeof AdminComplimentsTopicSlugRoute;
   ComplimentsTopicSlugRoute: typeof ComplimentsTopicSlugRoute;
 }
 
@@ -132,6 +146,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ComplimentsTopicSlugRouteImport;
       parentRoute: typeof rootRouteImport;
     };
+    '/admin-compliments/$topicSlug': {
+      id: '/admin-compliments/$topicSlug';
+      path: '/admin-compliments/$topicSlug';
+      fullPath: '/admin-compliments/$topicSlug';
+      preLoaderRoute: typeof AdminComplimentsTopicSlugRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
   }
 }
 
@@ -140,6 +161,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminDashboardRoute: AdminDashboardRoute,
   HomeRoute: HomeRoute,
   TopicSelectionRoute: TopicSelectionRoute,
+  AdminComplimentsTopicSlugRoute: AdminComplimentsTopicSlugRoute,
   ComplimentsTopicSlugRoute: ComplimentsTopicSlugRoute,
 };
 export const routeTree = rootRouteImport

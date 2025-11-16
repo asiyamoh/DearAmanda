@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { AppHeader } from '../../components/navigation/AppHeader';
 import { AdminModeToggle } from './components/admin-mode-toggle';
-import { TopicsManagementCard } from './components/topics-management-card';
+import { TopicsManagementTable } from './components/topics-management-table';
 import { ComplimentSummaryCard } from './components/compliment-summary-card';
 import { FloatingActionButton } from './components/floating-action-button';
 import { AdminDashboardLoading } from './components/admin-dashboard-loading';
@@ -77,7 +77,7 @@ export function AdminDashboardPage() {
 
       <main className="flex-1 px-4 py-8 md:py-12">
         <div className="max-w-7xl mx-auto space-y-6 md:space-y-8">
-          <TopicsManagementCard
+          <TopicsManagementTable
             topics={topics}
             onGenerateMore={handleGenerateMore}
             onEdit={topicModal.openEditModal}

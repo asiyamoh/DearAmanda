@@ -17,7 +17,9 @@ export function AdminModeToggle({
 
   // Get current route path
   const currentPath = routerState.location.pathname;
-  const isOnAdminRoute = currentPath === '/admin-dashboard';
+  const isOnAdminRoute =
+    currentPath === '/admin-dashboard' ||
+    currentPath.startsWith('/admin-compliments/');
 
   // Sync context based on route
   useEffect(() => {

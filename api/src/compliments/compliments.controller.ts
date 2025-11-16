@@ -1,9 +1,18 @@
-import { Controller, Get, Post, Patch, Param, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Param,
+  Body,
+} from '@nestjs/common';
 import { ComplimentsService } from './compliments.service';
 import {
   CreateComplimentDto,
   CreateComplimentsDto,
   MarkComplimentsAsUsedDto,
+  UpdateComplimentDto,
 } from './dto/create-compliment.dto';
 
 @Controller('compliments')
@@ -28,5 +37,18 @@ export class ComplimentsController {
   @Patch('used')
   markAsUsed(@Body() markComplimentsAsUsedDto: MarkComplimentsAsUsedDto) {
     return this.complimentsService.markAsUsed(markComplimentsAsUsedDto.ids);
+  }
+
+  @Patch(':id')
+  update(
+    @Param('id') id: string,
+    @Body() updateComplimentDto: UpdateComplimentDto
+  ) {
+    return this.complimentsService.update(id, updateComplimentDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.complimentsService.remove(id);
   }
 }

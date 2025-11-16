@@ -3,6 +3,7 @@ import { PrismaService } from '../database/prisma/prisma.service';
 import {
   CreateComplimentDto,
   CreateComplimentsDto,
+  UpdateComplimentDto,
 } from './dto/create-compliment.dto';
 
 @Injectable()
@@ -71,6 +72,44 @@ export class ComplimentsService {
         content,
         used: false,
       })),
+    });
+  }
+
+  async update(id: string, updateComplimentDto: UpdateComplimentDto) {
+    // Verify compliment exists
+    const compliment = await this.prisma.compliment.findUnique({
+      where: { id },
+    });
+
+    if (!compliment) {
+      throw new NotFoundException(`Compliment with id "${id}" not found`);
+    }
+
+    return this.prisma.compliment.update({
+      where: { id },
+      data: {
+        ...(updateComplimentDto.content !== undefined && {
+          content: updateComplimentDto.content,
+        }),
+        ...(updateComplimentDto.used !== undefined && {
+          used: updateComplimentDto.used,
+        }),
+      },
+    });
+  }
+
+  async remove(id: string) {
+    // Verify compliment exists
+    const compliment = await this.prisma.compliment.findUnique({
+      where: { id },
+    });
+
+    if (!compliment) {
+      throw new NotFoundException(`Compliment with id "${id}" not found`);
+    }
+
+    return this.prisma.compliment.delete({
+      where: { id },
     });
   }
 }

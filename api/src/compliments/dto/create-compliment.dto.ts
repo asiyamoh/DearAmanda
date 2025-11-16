@@ -1,4 +1,12 @@
-import { IsString, IsNotEmpty, IsUUID, IsArray } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsUUID,
+  IsArray,
+  IsOptional,
+  IsBoolean,
+  MinLength,
+} from 'class-validator';
 
 export class CreateComplimentDto {
   @IsUUID()
@@ -26,4 +34,15 @@ export class MarkComplimentsAsUsedDto {
   @IsUUID('4', { each: true })
   @IsNotEmpty()
   ids: string[];
+}
+
+export class UpdateComplimentDto {
+  @IsString()
+  @IsOptional()
+  @MinLength(1)
+  content?: string;
+
+  @IsBoolean()
+  @IsOptional()
+  used?: boolean;
 }

@@ -1,3 +1,4 @@
+import { useNavigate } from '@tanstack/react-router';
 import { Card } from '../../../components/ui/Card';
 import { Table, TableColumn, TableAction } from '../../../components/ui/Table';
 import { Button } from '../../../components/ui/Button';
@@ -8,27 +9,41 @@ interface TopicWithCount extends Topic {
   complimentCount?: number;
 }
 
-interface TopicsManagementCardProps {
+interface TopicsManagementTableProps {
   topics: TopicWithCount[];
   onGenerateMore?: (topic: Topic) => void;
   onEdit?: (topic: Topic) => void;
   onDelete?: (topic: Topic) => void;
 }
 
-export function TopicsManagementCard({
+export function TopicsManagementTable({
   topics,
   onGenerateMore,
   onEdit,
   onDelete,
-}: TopicsManagementCardProps) {
+}: TopicsManagementTableProps) {
+  const navigate = useNavigate();
+
+  const handleTopicClick = (topic: Topic) => {
+    navigate({
+      // @ts-expect-error - TanStack Router types may not recognize dynamically generated routes
+      to: '/admin-compliments/$topicSlug',
+      // @ts-expect-error - TanStack Router types may not recognize dynamically generated routes
+      params: { topicSlug: topic.slug },
+    });
+  };
+
   const columns: TableColumn<TopicWithCount>[] = [
     {
       header: 'Topic Name',
       key: 'name',
       render: topic => (
-        <span className="font-sans font-medium text-charcoal">
+        <button
+          onClick={() => handleTopicClick(topic)}
+          className="font-sans font-medium text-charcoal hover:text-forestGreen transition-colors text-left"
+        >
           {topic.name}
-        </span>
+        </button>
       ),
     },
     {

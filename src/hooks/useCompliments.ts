@@ -8,7 +8,10 @@ import {
   createCompliment,
   createComplimentsBatch,
   markComplimentsAsUsed,
+  updateCompliment,
+  deleteCompliment,
 } from '../api/endpoints/compliments';
+import type { UpdateComplimentDto } from '../api/types';
 
 /**
  * Query key factory for compliments
@@ -79,6 +82,41 @@ export function useMarkComplimentsAsUsed() {
     mutationFn: markComplimentsAsUsed,
     onSuccess: () => {
       // Invalidate all compliment queries since we don't know which topics were affected
+      queryClient.invalidateQueries({
+        queryKey: complimentKeys.all,
+      });
+    },
+  });
+}
+
+/**
+ * Update a single compliment mutation
+ */
+export function useUpdateCompliment() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: UpdateComplimentDto }) =>
+      updateCompliment(id, data),
+    onSuccess: data => {
+      // Invalidate compliments for the topic
+      queryClient.invalidateQueries({
+        queryKey: complimentKeys.list(data.topicId),
+      });
+    },
+  });
+}
+
+/**
+ * Delete a single compliment mutation
+ */
+export function useDeleteCompliment() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteCompliment,
+    onSuccess: () => {
+      // Invalidate all compliment queries since we don't have topicId in response
       queryClient.invalidateQueries({
         queryKey: complimentKeys.all,
       });
