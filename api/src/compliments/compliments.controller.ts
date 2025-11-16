@@ -3,6 +3,7 @@ import { ComplimentsService } from './compliments.service';
 import {
   CreateComplimentDto,
   CreateComplimentsDto,
+  MarkComplimentsAsUsedDto,
 } from './dto/create-compliment.dto';
 
 @Controller('compliments')
@@ -24,8 +25,8 @@ export class ComplimentsController {
     return this.complimentsService.createMany(createComplimentsDto);
   }
 
-  @Patch(':id/used')
-  markAsUsed(@Param('id') id: string) {
-    return this.complimentsService.markAsUsed(id);
+  @Patch('used')
+  markAsUsed(@Body() markComplimentsAsUsedDto: MarkComplimentsAsUsedDto) {
+    return this.complimentsService.markAsUsed(markComplimentsAsUsedDto.ids);
   }
 }

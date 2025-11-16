@@ -22,7 +22,6 @@ export class ComplimentsService {
     return this.prisma.compliment.findMany({
       where: {
         topicId,
-        used: false,
       },
       orderBy: {
         createdAt: 'desc', // Latest first
@@ -30,19 +29,19 @@ export class ComplimentsService {
     });
   }
 
-  async markAsUsed(id: string) {
-    const compliment = await this.prisma.compliment.findUnique({
-      where: { id },
-    });
-
-    if (!compliment) {
-      throw new NotFoundException(`Compliment with id "${id}" not found`);
+  async markAsUsed(ids: string[]) {
+    if (ids.length === 0) {
+      return { count: 0 };
     }
 
-    return this.prisma.compliment.update({
-      where: { id },
+    const result = await this.prisma.compliment.updateMany({
+      where: {
+        id: { in: ids },
+      },
       data: { used: true },
     });
+
+    return result;
   }
 
   async create(createComplimentDto: CreateComplimentDto) {

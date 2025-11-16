@@ -20,3 +20,10 @@ export class CreateComplimentsDto {
   @IsNotEmpty({ each: true })
   contents: string[];
 }
+
+export class MarkComplimentsAsUsedDto {
+  @IsArray()
+  @IsUUID('4', { each: true })
+  @IsNotEmpty()
+  ids: string[];
+}

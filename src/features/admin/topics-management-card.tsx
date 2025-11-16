@@ -2,10 +2,14 @@ import { Card } from '../../components/ui/Card';
 import { Table, TableColumn, TableAction } from '../../components/ui/Table';
 import { Button } from '../../components/ui/Button';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { Topic } from '../topic-selection/topic-selection.data';
+import type { Topic } from '../../api/types';
+
+interface TopicWithCount extends Topic {
+  complimentCount?: number;
+}
 
 interface TopicsManagementCardProps {
-  topics: Topic[];
+  topics: TopicWithCount[];
   onGenerateMore?: (topic: Topic) => void;
   onEdit?: (topic: Topic) => void;
   onDelete?: (topic: Topic) => void;
@@ -17,7 +21,7 @@ export function TopicsManagementCard({
   onEdit,
   onDelete,
 }: TopicsManagementCardProps) {
-  const columns: TableColumn<Topic>[] = [
+  const columns: TableColumn<TopicWithCount>[] = [
     {
       header: 'Topic Name',
       key: 'name',
@@ -39,7 +43,7 @@ export function TopicsManagementCard({
     },
   ];
 
-  const actions: TableAction<Topic>[] = [
+  const actions: TableAction<TopicWithCount>[] = [
     {
       label: 'Edit',
       icon: <PencilIcon className="w-4 h-4" />,
@@ -59,7 +63,7 @@ export function TopicsManagementCard({
   ];
 
   // Add Generate More button as a column since Table actions are icon-only
-  const columnsWithActions: TableColumn<Topic>[] = [
+  const columnsWithActions: TableColumn<TopicWithCount>[] = [
     ...columns,
     {
       header: 'Actions',

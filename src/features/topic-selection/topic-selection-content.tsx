@@ -5,12 +5,14 @@ import { TopicCard } from '../../components/ui/topic-card';
 import { Button } from '../../components/ui/Button';
 import { AdminModeToggle } from '../admin/admin-mode-toggle';
 import { useToggleReveal } from '../../contexts/toggle-reveal-provider';
-import { topics, Topic } from './topic-selection.data';
+import { useTopics } from '../../hooks/useTopics';
+import type { Topic } from '../../api/types';
 
 export function TopicSelectionContent() {
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
   const navigate = useNavigate();
   const { handleLogoClick } = useToggleReveal();
+  const { data: topics, isLoading, isError } = useTopics();
 
   const handleTopicClick = (topic: Topic) => {
     setSelectedTopic(topic);
@@ -18,8 +20,6 @@ export function TopicSelectionContent() {
 
   const handleContinue = () => {
     if (selectedTopic) {
-      // Navigate to compliment display page with topic slug
-      // Placeholder route for now - will be created later
       navigate({
         to: '/compliments/$topicSlug',
         params: { topicSlug: selectedTopic.slug },
@@ -30,6 +30,30 @@ export function TopicSelectionContent() {
   const handleBack = () => {
     navigate({ to: '/home' });
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-offWhite flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-lg text-slateGray">Loading topics...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isError || !topics) {
+    return (
+      <div className="min-h-screen bg-offWhite flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-serif text-forestGreen mb-4">
+            Error loading topics
+          </h1>
+          <p className="text-slateGray mb-4">Please try again later.</p>
+          <Button onClick={handleBack}>Go Back</Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-offWhite flex flex-col">
@@ -56,16 +80,22 @@ export function TopicSelectionContent() {
           </div>
 
           {/* Topic Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12">
-            {topics.map(topic => (
-              <TopicCard
-                key={topic.id}
-                name={topic.name}
-                isSelected={selectedTopic?.id === topic.id}
-                onClick={() => handleTopicClick(topic)}
-              />
-            ))}
-          </div>
+          {topics.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-slateGray">No topics available.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12">
+              {topics.map(topic => (
+                <TopicCard
+                  key={topic.id}
+                  name={topic.name}
+                  isSelected={selectedTopic?.id === topic.id}
+                  onClick={() => handleTopicClick(topic)}
+                />
+              ))}
+            </div>
+          )}
 
           {/* Continue Button */}
           <div className="flex justify-center pb-8">

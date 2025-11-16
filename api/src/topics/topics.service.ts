@@ -19,7 +19,6 @@ export class TopicsService {
       where: { slug },
       include: {
         compliments: {
-          where: { used: false },
           orderBy: { createdAt: 'desc' },
         },
       },

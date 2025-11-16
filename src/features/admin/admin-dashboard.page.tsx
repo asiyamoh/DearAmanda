@@ -5,29 +5,39 @@ import { TopicsManagementCard } from './topics-management-card';
 import { ComplimentSummaryCard } from './compliment-summary-card';
 import { FloatingActionButton } from './floating-action-button';
 import { CreateTopicModal } from './create-topic-modal';
-import { adminStats } from './admin-stats.data';
-import { topics as initialTopics } from '../../features/topic-selection/topic-selection.data';
-import { Topic } from '../../features/topic-selection/topic-selection.data';
+import { useTopics } from '../../hooks/useTopics';
+import { useCreateTopic } from '../../hooks/useTopics';
+import { useCreateComplimentsBatch } from '../../hooks/useCompliments';
+import { useAdminStats } from '../../hooks/useAdminStats';
 import { generateCompliments } from '../../utils/openai';
+import type { Topic } from '../../api/types';
 
-// Add fake compliment counts for admin view
-// In real implementation, this would come from database
-const getTopicsWithCounts = (topicsList: Topic[]): Topic[] => {
-  return topicsList.map((topic, index) => ({
+// Extended Topic type for admin view with compliment count
+interface TopicWithCount extends Topic {
+  complimentCount?: number;
+}
+
+// Add compliment counts for admin view
+// In real implementation, this would come from a separate query or be included in the topic response
+const getTopicsWithCounts = (topicsList: Topic[]): TopicWithCount[] => {
+  // For now, we'll use the compliments relation if available, otherwise 0
+  return topicsList.map(topic => ({
     ...topic,
-    complimentCount:
-      [
-        1250, 980, 1520, 870, 1100, 750, 1340, 920, 1080, 650, 1420, 890, 1150,
-        1030, 680,
-      ][index] || 0,
+    complimentCount: topic.compliments?.length || 0,
   }));
 };
 
 export function AdminDashboardPage() {
-  const [topics, setTopics] = useState<Topic[]>(initialTopics);
+  const { data: topics, isLoading: topicsLoading } = useTopics();
+  const { data: adminStats, isLoading: statsLoading } = useAdminStats();
+  const createTopicMutation = useCreateTopic();
+  const createComplimentsMutation = useCreateComplimentsBatch();
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
-  const topicsWithCounts = useMemo(() => getTopicsWithCounts(topics), [topics]);
+  const topicsWithCounts = useMemo(
+    () => getTopicsWithCounts(topics || []),
+    [topics]
+  );
 
   const handleGenerateMore = (topic: Topic) => {
     // TODO: Implement generate more functionality
@@ -48,62 +58,65 @@ export function AdminDashboardPage() {
     setIsCreateModalOpen(true);
   };
 
-  const handleSaveTopic = (
-    topicData: Omit<Topic, 'id' | 'complimentCount'>
+  const handleSaveTopic = async (
+    topicData: Omit<Topic, 'id' | 'createdAt' | 'updatedAt' | 'compliments'>
   ) => {
-    // Generate a new ID (in real implementation, this would come from the database)
-    const newId = Math.max(...topics.map(t => t.id), 0) + 1;
-
-    const newTopic: Topic = {
-      ...topicData,
-      id: newId,
-      complimentCount: 0,
-    };
-
-    // Add to topics list
-    setTopics(prev => [...prev, newTopic]);
-
-    console.log('Topic saved:', newTopic);
-    // TODO: In real implementation, save to Supabase/database
+    try {
+      await createTopicMutation.mutateAsync({
+        name: topicData.name,
+        prompt: topicData.prompt,
+      });
+      setIsCreateModalOpen(false);
+    } catch (error) {
+      console.error('Error creating topic:', error);
+      // TODO: Show error toast/notification to user
+    }
   };
 
   const handleGenerateTopic = async (
-    topicData: Omit<Topic, 'id' | 'complimentCount'>
+    topicData: Omit<Topic, 'id' | 'createdAt' | 'updatedAt' | 'compliments'> & {
+      complimentCountToGenerate?: number;
+    }
   ) => {
     try {
-      // First, save the topic
-      const newId = Math.max(...topics.map(t => t.id), 0) + 1;
-      const newTopic: Topic = {
-        ...topicData,
-        id: newId,
-        complimentCount: topicData.complimentCountToGenerate || 0,
-      };
-
-      // Add to topics list
-      setTopics(prev => [...prev, newTopic]);
+      // First, create the topic
+      const newTopic = await createTopicMutation.mutateAsync({
+        name: topicData.name,
+        prompt: topicData.prompt,
+      });
 
       // Then generate compliments using OpenAI
-      if (topicData.aiPrompt && topicData.complimentCountToGenerate) {
+      if (topicData.prompt && topicData.complimentCountToGenerate) {
         const compliments = await generateCompliments(
-          topicData.aiPrompt,
+          topicData.prompt,
           topicData.complimentCountToGenerate
         );
 
-        console.log('Generated compliments:', compliments);
-        // TODO: In real implementation, save compliments to database
-        // await supabase.from('compliments').insert(
-        //   compliments.map(text => ({
-        //     text,
-        //     topic_id: newTopic.id,
-        //     topic_slug: newTopic.slug,
-        //   }))
-        // );
+        // Save compliments to database
+        await createComplimentsMutation.mutateAsync({
+          topicId: newTopic.id,
+          contents: compliments,
+        });
+
+        console.log('Generated and saved compliments:', compliments.length);
       }
+
+      setIsCreateModalOpen(false);
     } catch (error) {
       console.error('Error generating topic and compliments:', error);
       // TODO: Show error toast/notification to user
     }
   };
+
+  if (topicsLoading || statsLoading) {
+    return (
+      <div className="min-h-screen bg-offWhite flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-lg text-slateGray">Loading admin dashboard...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-offWhite flex flex-col">
@@ -125,7 +138,7 @@ export function AdminDashboardPage() {
           />
 
           {/* Compliment Summary Card */}
-          <ComplimentSummaryCard stats={adminStats} />
+          {adminStats && <ComplimentSummaryCard stats={adminStats} />}
         </div>
       </main>
 

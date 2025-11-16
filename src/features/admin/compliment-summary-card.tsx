@@ -1,7 +1,21 @@
 import { Card } from '../../components/ui/Card';
 import { BarChart } from '../../components/ui/bar-chart';
 import { BoltIcon, EyeIcon, HeartIcon } from '@heroicons/react/24/outline';
-import { AdminStats, getStatChartData } from './admin-stats.data';
+import type { AdminStats } from '../../api/types';
+
+// Placeholder chart data generator
+// TODO: Replace with actual chart data from backend when stats endpoint is implemented
+const getStatChartData = (statType: keyof AdminStats): number[] => {
+  // Generate sample chart data - in real implementation, this would come from database
+  const baseValues: Record<keyof AdminStats, number[]> = {
+    totalCompliments: [420, 580, 650, 720, 680, 750, 820, 890, 950, 1020],
+    complimentsViewed: [310, 420, 480, 550, 520, 590, 640, 680, 720, 780],
+    favorites: [120, 150, 180, 200, 190, 210, 230, 250, 270, 285],
+    uniqueUsers: [28, 35, 42, 48, 45, 52, 58, 62, 68, 75],
+  };
+
+  return baseValues[statType] || [];
+};
 
 interface StatBoxProps {
   title: string;
