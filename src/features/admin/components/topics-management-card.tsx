@@ -1,8 +1,8 @@
-import { Card } from '../../components/ui/Card';
-import { Table, TableColumn, TableAction } from '../../components/ui/Table';
-import { Button } from '../../components/ui/Button';
+import { Card } from '../../../components/ui/Card';
+import { Table, TableColumn, TableAction } from '../../../components/ui/Table';
+import { Button } from '../../../components/ui/Button';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
-import type { Topic } from '../../api/types';
+import type { Topic } from '../../../api/types';
 
 interface TopicWithCount extends Topic {
   complimentCount?: number;

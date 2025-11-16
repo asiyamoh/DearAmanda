@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { useAdminMode } from '../../contexts/admin-provider';
-import { useToggleReveal } from '../../contexts/toggle-reveal-provider';
+import { useAdminMode } from '../../../contexts/admin-provider';
+import { useToggleReveal } from '../../../contexts/toggle-reveal-provider';
 import { useNavigate, useRouterState } from '@tanstack/react-router';
 import clsx from 'clsx';
 

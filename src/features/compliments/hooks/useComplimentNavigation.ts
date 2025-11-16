@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useMarkComplimentsAsUsed } from '../../hooks/useCompliments';
+import { useMarkComplimentsAsUsed } from '../../../hooks/useCompliments';
 
 const TRANSITION_DURATION = 150;
 
@@ -34,7 +34,7 @@ export function useComplimentNavigation(complimentsLength: number) {
   useEffect(() => {
     const viewedIdsRef = viewedComplimentIdsRef;
     const mutationRef = markAsUsedMutationRef;
-    
+
     return () => {
       const idsToMark = Array.from(viewedIdsRef.current);
       if (idsToMark.length > 0) {

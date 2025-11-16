@@ -1,13 +1,13 @@
 import { useNavigate } from '@tanstack/react-router';
-import { Footer } from '../../components/ui/Footer';
-import { AppHeader } from '../../components/navigation/AppHeader';
-import { AdminModeToggle } from '../admin/admin-mode-toggle';
-import { useToggleReveal } from '../../contexts/toggle-reveal-provider';
-import { Route } from '../../routes/compliments.$topicSlug';
-import { useTopicBySlug } from '../../hooks/useTopics';
-import { useComplimentsByTopicId } from '../../hooks/useCompliments';
-import { useComplimentNavigation } from './useComplimentNavigation';
-import { useComplimentKeyboardNavigation } from './useComplimentKeyboardNavigation';
+import { Footer } from '../../../components/ui/Footer';
+import { AppHeader } from '../../../components/navigation/AppHeader';
+import { AdminModeToggle } from '../../admin/components/admin-mode-toggle';
+import { useToggleReveal } from '../../../contexts/toggle-reveal-provider';
+import { Route } from '../../../routes/compliments.$topicSlug';
+import { useTopicBySlug } from '../../../hooks/useTopics';
+import { useComplimentsByTopicId } from '../../../hooks/useCompliments';
+import { useComplimentNavigation } from '../hooks/useComplimentNavigation';
+import { useComplimentKeyboardNavigation } from '../hooks/useComplimentKeyboardNavigation';
 import { ComplimentCard } from './ComplimentCard';
 import { ComplimentNavigation } from './ComplimentNavigation';
 import {

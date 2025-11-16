@@ -1,7 +1,7 @@
-import { Card } from '../../components/ui/Card';
-import { BarChart } from '../../components/ui/bar-chart';
+import { Card } from '../../../components/ui/Card';
+import { BarChart } from '../../../components/ui/bar-chart';
 import { BoltIcon, EyeIcon, HeartIcon } from '@heroicons/react/24/outline';
-import type { AdminStats } from '../../api/types';
+import type { AdminStats } from '../../../api/types';
 
 // Placeholder chart data generator
 // TODO: Replace with actual chart data from backend when stats endpoint is implemented

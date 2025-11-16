@@ -1,63 +1,30 @@
-import { useState } from 'react';
-import { useNavigate } from '@tanstack/react-router';
-import { AppHeader } from '../../components/navigation/AppHeader';
-import { TopicCard } from '../../components/ui/topic-card';
-import { Button } from '../../components/ui/Button';
-import { AdminModeToggle } from '../admin/admin-mode-toggle';
-import { useToggleReveal } from '../../contexts/toggle-reveal-provider';
-import { useTopics } from '../../hooks/useTopics';
-import type { Topic } from '../../api/types';
+import { AppHeader } from '../../../components/navigation/AppHeader';
+import { TopicCard } from '../../../components/ui/topic-card';
+import { Button } from '../../../components/ui/Button';
+import { AdminModeToggle } from '../../admin/components/admin-mode-toggle';
+import { useToggleReveal } from '../../../contexts/toggle-reveal-provider';
+import { useTopics } from '../../../hooks/useTopics';
+import { useTopicSelection } from '../hooks/useTopicSelection';
+import { TopicSelectionLoading } from './topic-selection-loading';
+import { TopicSelectionError } from './topic-selection-error';
+import { TopicSelectionEmpty } from './topic-selection-empty';
 
 export function TopicSelectionContent() {
-  const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
-  const navigate = useNavigate();
   const { handleLogoClick } = useToggleReveal();
   const { data: topics, isLoading, isError } = useTopics();
-
-  const handleTopicClick = (topic: Topic) => {
-    setSelectedTopic(topic);
-  };
-
-  const handleContinue = () => {
-    if (selectedTopic) {
-      navigate({
-        to: '/compliments/$topicSlug',
-        params: { topicSlug: selectedTopic.slug },
-      });
-    }
-  };
-
-  const handleBack = () => {
-    navigate({ to: '/home' });
-  };
+  const { selectedTopic, handleTopicClick, handleContinue, handleBack } =
+    useTopicSelection();
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-offWhite flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-lg text-slateGray">Loading topics...</p>
-        </div>
-      </div>
-    );
+    return <TopicSelectionLoading />;
   }
 
   if (isError || !topics) {
-    return (
-      <div className="min-h-screen bg-offWhite flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-serif text-forestGreen mb-4">
-            Error loading topics
-          </h1>
-          <p className="text-slateGray mb-4">Please try again later.</p>
-          <Button onClick={handleBack}>Go Back</Button>
-        </div>
-      </div>
-    );
+    return <TopicSelectionError onBack={handleBack} />;
   }
 
   return (
     <div className="min-h-screen bg-offWhite flex flex-col">
-      {/* Header */}
       <AppHeader
         title="Dear Amanda"
         showBackButton
@@ -66,7 +33,6 @@ export function TopicSelectionContent() {
         rightAction={<AdminModeToggle />}
       />
 
-      {/* Main Content */}
       <div className="flex-1 px-4 py-8 md:py-12">
         <div className="max-w-4xl mx-auto">
           {/* Title and Subtitle */}
@@ -81,9 +47,7 @@ export function TopicSelectionContent() {
 
           {/* Topic Grid */}
           {topics.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-slateGray">No topics available.</p>
-            </div>
+            <TopicSelectionEmpty />
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12">
               {topics.map(topic => (
