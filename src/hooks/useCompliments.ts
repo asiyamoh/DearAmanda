@@ -12,6 +12,7 @@ import {
   deleteCompliment,
 } from '../api/endpoints/compliments';
 import type { UpdateComplimentDto } from '../api/types';
+import { adminStatsKeys } from './useAdminStats';
 
 /**
  * Query key factory for compliments
@@ -51,6 +52,8 @@ export function useCreateCompliment() {
       queryClient.invalidateQueries({
         queryKey: complimentKeys.list(data.topicId),
       });
+      // Invalidate admin stats since compliment count changed
+      queryClient.invalidateQueries({ queryKey: adminStatsKeys.all });
     },
   });
 }
@@ -68,6 +71,8 @@ export function useCreateComplimentsBatch() {
       queryClient.invalidateQueries({
         queryKey: complimentKeys.list(variables.topicId),
       });
+      // Invalidate admin stats since compliment count changed
+      queryClient.invalidateQueries({ queryKey: adminStatsKeys.all });
     },
   });
 }
@@ -85,6 +90,8 @@ export function useMarkComplimentsAsUsed() {
       queryClient.invalidateQueries({
         queryKey: complimentKeys.all,
       });
+      // Invalidate admin stats since viewed count changed
+      queryClient.invalidateQueries({ queryKey: adminStatsKeys.all });
     },
   });
 }
@@ -103,6 +110,8 @@ export function useUpdateCompliment() {
       queryClient.invalidateQueries({
         queryKey: complimentKeys.list(data.topicId),
       });
+      // Invalidate admin stats since compliment might have changed (e.g., used status)
+      queryClient.invalidateQueries({ queryKey: adminStatsKeys.all });
     },
   });
 }
@@ -120,6 +129,8 @@ export function useDeleteCompliment() {
       queryClient.invalidateQueries({
         queryKey: complimentKeys.all,
       });
+      // Invalidate admin stats since compliment count changed
+      queryClient.invalidateQueries({ queryKey: adminStatsKeys.all });
     },
   });
 }

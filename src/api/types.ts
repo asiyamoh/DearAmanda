@@ -50,9 +50,17 @@ export interface UpdateComplimentDto {
   used?: boolean;
 }
 
+export interface ComplimentStatsByTopic {
+  topicId: string;
+  topicName: string;
+  topicSlug: string;
+  total: number;
+  viewed: number;
+  unused: number;
+}
+
 export interface AdminStats {
   totalCompliments: number;
   complimentsViewed: number;
-  favorites: number;
-  uniqueUsers: number;
+  complimentsByTopic: ComplimentStatsByTopic[];
 }

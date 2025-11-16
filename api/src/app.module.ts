@@ -5,9 +5,16 @@ import { AppConfigModule } from './config/app.config.module';
 import { DatabaseModule } from './database/database.module';
 import { TopicsModule } from './topics/topics.module';
 import { ComplimentsModule } from './compliments/compliments.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
-  imports: [AppConfigModule, DatabaseModule, TopicsModule, ComplimentsModule],
+  imports: [
+    AppConfigModule,
+    DatabaseModule,
+    TopicsModule,
+    ComplimentsModule,
+    AdminModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

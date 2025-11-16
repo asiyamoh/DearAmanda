@@ -11,6 +11,7 @@ import {
   deleteTopic,
 } from '../api/endpoints/topics';
 import type { UpdateTopicDto } from '../api/types';
+import { adminStatsKeys } from './useAdminStats';
 
 /**
  * Query key factory for topics
@@ -56,6 +57,8 @@ export function useCreateTopic() {
     onSuccess: () => {
       // Invalidate topics list to refetch
       queryClient.invalidateQueries({ queryKey: topicKeys.lists() });
+      // Invalidate admin stats since topic count changed
+      queryClient.invalidateQueries({ queryKey: adminStatsKeys.all });
     },
   });
 }
@@ -75,6 +78,8 @@ export function useUpdateTopic() {
       queryClient.invalidateQueries({
         queryKey: topicKeys.detail(data.slug),
       });
+      // Invalidate admin stats since topic name might have changed
+      queryClient.invalidateQueries({ queryKey: adminStatsKeys.all });
     },
   });
 }
@@ -90,6 +95,8 @@ export function useDeleteTopic() {
     onSuccess: () => {
       // Invalidate topics list
       queryClient.invalidateQueries({ queryKey: topicKeys.lists() });
+      // Invalidate admin stats since topic count changed
+      queryClient.invalidateQueries({ queryKey: adminStatsKeys.all });
     },
   });
 }
